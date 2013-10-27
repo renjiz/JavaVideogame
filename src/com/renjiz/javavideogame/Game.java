@@ -10,6 +10,8 @@ import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
 
+import com.renjiz.javavideogame.graphics.Screen;
+
 public class Game extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
 
@@ -20,6 +22,8 @@ public class Game extends Canvas implements Runnable {
 	private Thread thread;
 	private JFrame frame;
 	private boolean running = false;
+	
+	private Screen screen;
 
 	private BufferedImage image = new BufferedImage(width, height,
 			BufferedImage.TYPE_INT_RGB);
@@ -31,6 +35,7 @@ public class Game extends Canvas implements Runnable {
 		setPreferredSize(size);
 
 		frame = new JFrame();
+		screen = new Screen(width,height);
 	}
 
 	public synchronized void start() {
