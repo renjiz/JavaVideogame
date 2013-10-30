@@ -25,6 +25,8 @@ public class Game extends Canvas implements Runnable {
 	private boolean running = false;
 
 	private Screen screen;
+	
+	private int x=0, y=0;
 
 	private BufferedImage image = new BufferedImage(width, height,
 			BufferedImage.TYPE_INT_RGB);
@@ -89,6 +91,8 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public void update() {
+		x++;
+		y++;
 
 	}
 
@@ -100,7 +104,7 @@ public class Game extends Canvas implements Runnable {
 		}
 
 		screen.clear();
-		screen.render();
+		screen.render(x,y);
 
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = screen.pixels[i];
