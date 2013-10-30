@@ -1,7 +1,6 @@
 package com.renjiz.javavideogame;
 
 import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
@@ -11,6 +10,7 @@ import java.awt.image.DataBufferInt;
 import javax.swing.JFrame;
 
 import com.renjiz.javavideogame.graphics.Screen;
+import com.renjiz.javavideogame.input.Keyboard;
 
 public class Game extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
@@ -22,11 +22,12 @@ public class Game extends Canvas implements Runnable {
 
 	private Thread thread;
 	private JFrame frame;
+	private Keyboard key;
 	private boolean running = false;
 
 	private Screen screen;
-	
-	private int x=0, y=0;
+
+	private int x = 0, y = 0;
 
 	private BufferedImage image = new BufferedImage(width, height,
 			BufferedImage.TYPE_INT_RGB);
@@ -40,6 +41,9 @@ public class Game extends Canvas implements Runnable {
 
 		frame = new JFrame();
 		screen = new Screen(width, height);
+
+		key = new Keyboard();
+		addKeyListener(key);
 	}
 
 	public synchronized void start() {
@@ -82,17 +86,20 @@ public class Game extends Canvas implements Runnable {
 			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
 				System.out.println(updates + " ups," + frames + " fps");
-				frame.setTitle(title + "    |    " + updates + " ups," + frames + " fps");
+				frame.setTitle(title + "    |    " + updates + " ups," + frames
+						+ " fps");
 				updates = 0;
-				frames =0;
+				frames = 0;
 			}
 
 		}
 	}
 
 	public void update() {
+		key.update();
 		x++;
 		y++;
+		
 
 	}
 
@@ -104,7 +111,7 @@ public class Game extends Canvas implements Runnable {
 		}
 
 		screen.clear();
-		screen.render(x,y);
+		screen.render(x, y);
 
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = screen.pixels[i];
